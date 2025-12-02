@@ -168,6 +168,63 @@ pip install trulens-eval
 
 ### Observability Platforms
 
+### Langwatch 🔍 
+**Website**: https://langwatch.ai
+**GitHub**: https://github.com/langwatch/langwatch
+**Pricing**: Free tier, Pro from $99/month
+
+**What it does**: Comprehensive observability platform specifically designed for LLM applications, providing real-time monitoring, evaluation, and optimization capabilities.
+
+**Key Features**:
+- **Real-time Quality Monitoring**: Track response quality metrics live
+- **Cost Analytics**: Monitor token usage and API costs
+- **Custom Evaluators**: Define domain-specific evaluation metrics
+- **Trace Analysis**: Debug conversation flows and multi-step reasoning
+- **Guardrails**: Implement safety checks and quality thresholds
+- **A/B Testing**: Compare model versions in production
+- **Alert System**: Get notified of quality degradation or anomalies
+
+**When to use**:
+- Production monitoring of LLM applications
+- Need real-time quality metrics
+- Cost optimization tracking
+- Compliance and audit requirements
+- Scale beyond 1000+ requests/minute
+
+**Installation**:
+```bash
+pip install langwatch
+```
+
+**Quick start**:
+```python
+import langwatch
+
+langwatch.init(api_key="your-api-key")
+
+@langwatch.trace()
+def evaluate_response(prompt):
+    response = llm.generate(prompt)
+    # Automatic tracking of latency, tokens, cost
+    return response
+
+# Custom evaluation
+langwatch.evaluate(
+    response=response,
+    evaluators=["coherence", "faithfulness", "toxicity"]
+)
+```
+
+**Production Features**:
+- Dashboard for real-time monitoring
+- Historical trend analysis
+- Export to data warehouses
+- Integration with major LLM providers
+
+---
+
+## Observability Platforms
+
 #### Langfuse
 **Repository**: https://github.com/langfuse/langfuse
 
@@ -408,18 +465,6 @@ pip install arize-phoenix
 
 ## Comparison Guide
 
-### Open Source vs. Commercial
-
-| Criteria | Open Source | Commercial |
-|----------|------------|------------|
-| **Cost** | Free (compute only) | Subscription fees |
-| **Control** | Full (self-hosted) | Limited (managed) |
-| **Setup** | Manual configuration | Quick setup |
-| **Maintenance** | Self-managed | Vendor-managed |
-| **Customization** | Unlimited | Limited to platform features |
-| **Support** | Community | Dedicated support |
-| **Security** | Self-hosted (full control) | Vendor-hosted (compliance certs) |
-
 ### Framework Selection Guide
 
 **Choose DeepEval if**:
@@ -446,18 +491,6 @@ pip install arize-phoenix
 - You need trace-based evaluation
 - You want prompt versioning
 - You prefer self-hosting
-
-### Cost Comparison (Monthly)
-
-| Platform | Free Tier | Starter | Professional | Enterprise |
-|----------|-----------|---------|--------------|------------|
-| **DeepEval (Confident AI)** | ✅ 1K evals | $49 | $199 | Custom |
-| **LangSmith** | ✅ 5K traces | $39 | $199 | Custom |
-| **Braintrust** | ✅ Limited | $0 (usage-based) | $0 (usage-based) | Custom |
-| **HoneyHive** | ❌ | Custom | Custom | Custom |
-| **Bedrock Evals** | Pay per use | Pay per use | Pay per use | Custom |
-| **Azure AI Foundry** | Pay per use | Pay per use | Pay per use | Custom |
-| **Vertex AI** | Pay per use | Pay per use | Pay per use | Custom |
 
 ---
 

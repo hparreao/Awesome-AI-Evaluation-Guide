@@ -2,18 +2,32 @@
 
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](CONTRIBUTING.md)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 ## About This Guide
 
-This repository provides **practical, production-ready evaluation methods** for AI systems, with emphasis on:
+A comprehensive guide for evaluating Large Language Models (LLMs) with practical implementations and clear guidance on metric selection.
 
-- **Implementation-first approach**: Working code examples, not just theory
-- **Agentic AI evaluation**: Methods for autonomous and multi-agent systems
-- **Domain-specific guidance**: Medical, legal, financial RAG with appropriate safety thresholds
-- **Global accessibility**: Evaluation strategies that work in contexts with limited infrastructure
-- **Explainability integration**: Connecting evaluation to interpretability and human oversight
+### What This Repository Provides
 
-**What makes this different?** While many awesome lists curate tools and papers, this guide focuses on **how to implement** evaluation in real applications, with complete code examples, production best practices, and domain-specific case studies.
+- **Working Code Examples**: Complete implementations of evaluation metrics
+- **Mathematical Foundations**: Understanding the theory behind each metric
+- **Metric Selection Guidance**: When and why to use each evaluation method
+- **Domain-Specific Considerations**: Tailored approaches for different applications
+- **Observability Tools**: Integration with monitoring platforms
+
+### Key Concepts from Recent Research
+
+| Concept | Finding | Source | Implication |
+|---------|---------|--------|-------------|
+| Consistency vs Accuracy | Models can show high accuracy with low consistency | SCORE (NVIDIA 2025) | Evaluate both dimensions |
+| Pass@k vs Pass^k | Different metrics measure different aspects | Code generation research | Choose based on use case |
+| Confidence Scoring | Ensemble methods show correlation with accuracy | Industry studies | Consider multiple approaches |
+| System Evaluation | Component interactions affect overall performance | RAG research | Evaluate holistically |
+
+### Repository Structure
+
+This guide organizes evaluation methods into clear categories with practical implementations for each.
 
 ---
 
@@ -22,11 +36,16 @@ This repository provides **practical, production-ready evaluation methods** for 
 - [Quick Start](#quick-start)
 - [Evaluation Metrics](#evaluation-metrics)
   - [Traditional Metrics](#traditional-metrics)
-  - [Probability-Based Metrics](#probability-based-metrics)
-  - [LLM-as-a-Judge](#llm-as-a-judge)
-  - [Confidence Scoring](#confidence-scoring)
-  - [Hallucination Detection](#hallucination-detection)
-  - [Bias Detection](#bias-detection)
+  - [Modern Metrics](#modern-metrics)
+    - [Consistency & Robustness (SCORE)](#consistency--robustness-score)
+    - [Probability-Based Metrics](#probability-based-metrics)
+    - [LLM-as-a-Judge](#llm-as-a-judge)
+  - [Production Metrics](#production-metrics)
+    - [Confidence Scoring](#confidence-scoring)
+    - [Calibration Methods](#calibration-methods)
+  - [Safety & Bias](#safety--bias)
+    - [Hallucination Detection](#hallucination-detection)
+    - [Bias Detection](#bias-detection)
 - [Domain-Specific Evaluation](#domain-specific-evaluation)
   - [RAG Systems](#rag-systems)
   - [Code Generation](#code-generation)
@@ -38,6 +57,32 @@ This repository provides **practical, production-ready evaluation methods** for 
 - [Citation](#citation)
 
 ---
+
+## Metric Selection Guide
+
+### Quick Decision Table
+
+| Task Type | Primary Metrics | Secondary Metrics | Key Considerations |
+|-----------|----------------|-------------------|-------------------|
+| **Text Generation** | Perplexity, G-Eval | BLEU, ROUGE | Need reference texts for BLEU/ROUGE |
+| **Question Answering** | Answer Correctness, Faithfulness | BERTScore, Exact Match | Domain expertise affects threshold |
+| **Code Generation** | Pass@k (benchmarks), Pass^k (reliability) | Syntax validity, Security | Pass@k ≠ Pass^k for planning |
+| **RAG Systems** | Faithfulness, Context Relevance | Precision@k, NDCG | Evaluate retrieval and generation separately |
+| **Translation** | BLEU, METEOR | BERTScore, Human eval | BLEU has known limitations |
+| **Summarization** | ROUGE, Relevance | Coherence, Consistency | ROUGE may miss semantic equivalence |
+| **Dialogue** | Coherence, Engagement | Response diversity | Context window important |
+| **Multi-Agent** | Task completion, Coordination | Communication efficiency | System-level metrics needed |
+
+### Domain-Specific Thresholds
+
+| Domain | Metric Type | Typical Threshold | Rationale |
+|--------|------------|------------------|-----------|
+| **Medical** | Faithfulness | > 0.9 | Patient safety critical |
+| **Legal** | Factual accuracy | > 0.95 | Regulatory compliance |
+| **Financial** | Numerical precision | > 0.98 | Monetary implications |
+| **Customer Support** | Response relevance | > 0.7 | User satisfaction |
+| **Creative Writing** | Diversity score | > 0.6 | Avoid repetition |
+| **Education** | Answer correctness | > 0.85 | Learning outcomes |
 
 ## Quick Start
 
@@ -52,12 +97,12 @@ cd Awesome-AI-Evaluation-Guide
 pip install -r requirements.txt
 ```
 
-### Your First Evaluation
+### Basic Usage Example
 
 ```python
+# Example: Evaluating text generation quality
 from examples.llm_as_judge import evaluate_response
 
-# Evaluate a model response
 result = evaluate_response(
     question="What is the capital of France?",
     response="Paris is the capital of France.",
@@ -211,6 +256,45 @@ print(f"Score: {correctness.score}")  # 0-1 scale
 
 ---
 
+## Modern Metrics
+
+### Consistency & Robustness (SCORE)
+
+The SCORE framework (NVIDIA 2025) evaluates model consistency alongside accuracy, providing insights into reliability.
+
+#### Components of SCORE
+
+| Metric | What it Measures | Use Case |
+|--------|------------------|----------|
+| **Consistency Rate (CR@K)** | If model gives same correct answer K times | Reliability assessment |
+| **Prompt Robustness** | Stability across paraphrased prompts | Input variation handling |
+| **Sampling Robustness** | Consistency under temperature changes | Deployment configuration |
+| **Order Robustness** | Invariance to choice ordering | Multiple-choice tasks |
+
+#### When to Use SCORE
+
+- Evaluating model reliability beyond accuracy
+- Testing robustness to input variations
+- Assessing deployment readiness
+- Comparing model stability
+
+**Implementation**: [examples/consistency_robustness/score_framework.py](examples/consistency_robustness/score_framework.py)
+
+**Documentation**: [docs/consistency-robustness/score-framework.md](docs/consistency-robustness/score-framework.md)
+
+```python
+from examples.consistency_robustness import SCOREEvaluator
+
+evaluator = SCOREEvaluator(model=your_model)
+metrics = evaluator.evaluate(test_cases)
+
+# Compare accuracy vs consistency
+print(f"Accuracy: {metrics.accuracy:.2%}")
+print(f"Consistency Rate: {metrics.consistency_rate:.2%}")
+```
+
+---
+
 ### Confidence Scoring
 
 Ensemble-based methods for reliable confidence estimation.
@@ -353,19 +437,42 @@ medical_faithfulness = GEval(
 
 ### Code Generation
 
-Evaluation methods for code synthesis tasks.
+#### Understanding Pass@k vs Pass^k
 
-#### Pass@k Metrics
-**What it measures**: Probability that at least one of k generated solutions passes all tests.
+These metrics measure different aspects of code generation performance and serve different purposes.
 
-**Formula**: `Pass@k = E[1 - C(n-c, k) / C(n, k)]`
-- n = total samples generated
-- c = correct samples
-- k = samples considered
+##### Metric Comparison
 
-**Variants**:
-- **Pass@k**: Standard metric (used in HumanEval, MBPP)
-- **Pass^k**: Geometric mean variant for variance reduction
+| Metric | Definition | Formula | Use Case |
+|--------|-----------|---------|----------|
+| **Pass@k** | At least one of k solutions passes | `1 - C(n-c,k)/C(n,k)` | Benchmark comparison |
+| **Pass^k** | All k solutions pass | `p^k` | Reliability planning |
+
+##### Practical Example
+
+For a model with 70% individual success rate:
+
+| k | Pass@k | Pass^k | Gap | Interpretation |
+|---|--------|--------|-----|----------------|
+| 1 | 70% | 70% | 0% | Single attempt baseline |
+| 3 | 97% | 34% | 63% | Large gap between metrics |
+| 5 | 99% | 17% | 82% | Gap increases with k |
+
+##### When to Use Each
+
+**Use Pass@k for:**
+- Comparing models on benchmarks
+- Reporting best-case performance
+- Academic evaluation
+
+**Use Pass^k for:**
+- Planning system reliability
+- Resource allocation
+- SLA commitments
+
+**Implementation**: [examples/code_generation/pass_metrics.py](examples/code_generation/pass_metrics.py)
+
+**Documentation**: [docs/code-generation/pass-metrics-distinction.md](docs/code-generation/pass-metrics-distinction.md)
 
 **Implementation**: [examples/code_generation/pass_at_k.py](examples/code_generation/pass_at_k.py)
 
