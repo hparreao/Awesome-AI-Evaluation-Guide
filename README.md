@@ -111,6 +111,9 @@ cd Awesome-AI-Evaluation-Guide
 pip install -r requirements.txt
 
 # Optional: Install specific evaluation frameworks
+- [FutureAGI ai-evaluation](https://github.com/future-agi/ai-evaluation)
+- [FutureAGI futureagi-sdk](https://github.com/future-agi/futureagi-sdk)
+
 pip install deepeval ragas langfuse trulens-eval  # Python frameworks
 npm install -g promptfoo  # JavaScript CLI tool (optional)
 ```
