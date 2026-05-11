@@ -548,6 +548,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[OpenAI Evals](https://github.com/openai/evals)** - Reference implementation with 100+ community-contributed evaluations
 - **[LangCheck](https://github.com/citadel-ai/langcheck)** - Simple, composable evaluation metrics for LLM applications
 - **[Athina AI](https://github.com/athina-ai/athina-sdk)** - Configurable evaluation metrics with focus on reliability
+- **[ai-evaluation](https://github.com/future-agi/ai-evaluation)** - Open-source LLM evaluation framework with 50+ metrics, LLM-as-Judge augmentation, guardrail scanners (jailbreak, PII, injection), and AutoEval pipelines with CI/CD support
 
 #### Observability & Monitoring
 - **[Langfuse](https://github.com/langfuse/langfuse)** - Open-source LLM engineering platform with tracing and prompt management
@@ -556,6 +557,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[Opik](https://github.com/comet-ml/opik)** - Self-hostable platform with dataset management and experiment tracking
 - **[Helicone](https://www.helicone.ai/)** - Observability platform with request caching and rate limiting
 - **[Weights & Biases](https://wandb.ai/site)** - ML experiment tracking extended for LLM evaluation
+- **[traceAI](https://github.com/future-agi/traceAI)** - Open-source OpenTelemetry-native tracing framework that auto-instruments 20+ AI frameworks and LLM providers, capturing prompts, tokens, latency, and errors
 
 ### Commercial Solutions
 
