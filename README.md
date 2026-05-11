@@ -548,6 +548,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[OpenAI Evals](https://github.com/openai/evals)** - Reference implementation with 100+ community-contributed evaluations
 - **[LangCheck](https://github.com/citadel-ai/langcheck)** - Simple, composable evaluation metrics for LLM applications
 - **[Athina AI](https://github.com/athina-ai/athina-sdk)** - Configurable evaluation metrics with focus on reliability
+- **[agent-opt](https://github.com/future-agi/agent-opt)** - Open-source library for automated optimization of AI agent workflows with evaluation-driven prompt and config tuning
 
 #### Observability & Monitoring
 - **[Langfuse](https://github.com/langfuse/langfuse)** - Open-source LLM engineering platform with tracing and prompt management
