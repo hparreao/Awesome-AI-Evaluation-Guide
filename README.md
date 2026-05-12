@@ -784,6 +784,7 @@ def cached_evaluate(input_hash, output_hash):
 - **[Holistic Evaluation of LLMs](https://crfm.stanford.edu/helm/latest/)** - Stanford's HELM methodology and learnings
 - **[RAG Evaluation Guide](https://docs.ragas.io/en/latest/)** - Best practices for evaluating retrieval-augmented generation
 - **[Prompt Engineering Guide](https://www.promptingguide.ai/)** - Includes evaluation strategies for prompts
+- **[Mastering AI Agent Evaluation (Future AGI, eBook)](https://futureagi.com/ebooks/mastering-ai-agent-evaluation/)** - Evaluation playbooks for agent failure modes (planning, memory, tool use) and high-stakes production deployment
 
 #### Papers & Research
 - **[G-Eval Paper (2023)](https://arxiv.org/abs/2303.16634)** - NLG evaluation using GPT-4 with chain-of-thought
