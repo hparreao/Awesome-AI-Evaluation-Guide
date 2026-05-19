@@ -556,6 +556,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[Opik](https://github.com/comet-ml/opik)** - Self-hostable platform with dataset management and experiment tracking
 - **[Helicone](https://www.helicone.ai/)** - Observability platform with request caching and rate limiting
 - **[Weights & Biases](https://wandb.ai/site)** - ML experiment tracking extended for LLM evaluation
+- **[agenttrace](https://github.com/luoyuctl/agenttrace)** - Local-first TUI and CLI for evaluating AI coding agent sessions with cost, token, latency, and health gates.
 
 ### Commercial Solutions
 
