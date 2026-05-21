@@ -613,6 +613,13 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[PubMedQA](https://pubmedqa.github.io/)** - Biomedical research question answering
 - **[MedQA](https://github.com/jind11/MedQA)** - Medical examination questions (USMLE style)
 
+
+#### Browser & Web Agents
+- **[ClawBench](https://github.com/reacher-z/ClawBench)** - 283 everyday tasks on live production websites (booking, ordering, applying); two-stage scoring with HTTP-request interception + LLM judge on payload; [arXiv:2604.08523](https://arxiv.org/abs/2604.08523) · [Leaderboard](https://claw-bench.com)
+- **[WebArena](https://github.com/web-arena-x/webarena)** - 812 long-horizon tasks on self-hostable replica websites with state-check evaluators
+- **[WebVoyager](https://github.com/MinorJerry/WebVoyager)** - End-to-end vision-language web agent benchmark on 15 real websites
+- **[Mind2Web](https://github.com/OSU-NLP-Group/Mind2Web)** - Generalist web-agent tasks across 137 real websites in 31 domains
+
 #### Retrieval & RAG
 - **[BEIR](https://github.com/beir-cellar/beir)** - Heterogeneous benchmark for information retrieval across 18 datasets
 - **[MTEB](https://github.com/embeddings-benchmark/mteb)** - Massive Text Embedding Benchmark with 8 tasks and 58 datasets
