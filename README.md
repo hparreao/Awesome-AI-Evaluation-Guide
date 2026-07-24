@@ -356,6 +356,8 @@ Ensemble-based methods for reliable confidence estimation.
 **Implementation**: [examples/confidence_scoring/weighted_ensemble.py](examples/confidence_scoring/weighted_ensemble.py)
 
 #### Calibration (Platt Scaling)
+**Related offline board**: [REFUTE](https://bgpt.pro/refute) reports critique skill separately from Brier/calibration on science summaries (skill ≠ honesty).
+
 **What it solves**: Aligns raw confidence scores with actual accuracy.
 
 **Goal**: Expected Calibration Error (ECE) < 0.05 for production systems.
@@ -642,6 +644,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 #### Truthfulness & Hallucination
 - **[TruthfulQA](https://github.com/sylinrl/TruthfulQA)** - Measures whether models generate truthful answers to questions
 - **[HaluEval](https://github.com/RUCAIBox/HaluEval)** - Hallucination evaluation across diverse tasks
+- **[REFUTE](https://bgpt.pro/refute)** - Judge-free scientific critique & epistemic calibration on recent science summaries; separates critique skill from calibrated honesty (overclaims, planted flaws, confidence). [Dataset](https://huggingface.co/datasets/BGPT-OFFICIAL/refute) · [Leaderboard](https://huggingface.co/spaces/BGPT-OFFICIAL/refute-leaderboard)
 - **[FActScore](https://github.com/shmsw25/FActScore)** - Fine-grained atomic fact verification
 
 #### Bias & Fairness
