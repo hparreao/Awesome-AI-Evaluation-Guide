@@ -1,0 +1,4 @@
+interface:
+  display_name: "Confidence Calibration"
+  short_description: "Audit confidence against observed outcomes."
+  default_prompt: "Calibrate confidence for this LLM workflow."

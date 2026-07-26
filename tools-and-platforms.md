@@ -307,6 +307,40 @@ pip install arize-phoenix
 
 ---
 
+#### MLflow
+**Documentation**: https://mlflow.org/docs/latest/genai/tracing
+
+**What it does**: Open-source tracing, evaluation, and experiment tracking for LLM applications and agents.
+
+**Key Features**:
+- OpenTelemetry-compatible traces and span export
+- Automatic and manual instrumentation for LLM and agent frameworks
+- Evaluation datasets, human feedback, and experiment tracking
+- Self-hosting option for trace and experiment data
+
+**When to use**:
+- You already use MLflow for experiments or model lifecycle management
+- You need an open-source platform that combines tracing with evaluations
+- You want to retain control over observability data
+
+---
+
+#### Traceloop / OpenLLMetry
+**Documentation**: https://www.traceloop.com/docs/openllmetry/introduction
+
+**What it does**: OpenTelemetry-based instrumentation for LLM applications that can export traces to Traceloop or an existing observability backend.
+
+**Key Features**:
+- Non-invasive instrumentation for common LLM frameworks and provider SDKs
+- Trace annotations for workflows, tasks, agents, and tools
+- Portable telemetry through OpenTelemetry
+
+**When to use**:
+- You need instrumentation independent of the final tracing backend
+- Your platform already has an OpenTelemetry collector or observability stack
+
+---
+
 ## Commercial Platforms
 
 ### LangSmith (LangChain)
@@ -328,6 +362,23 @@ pip install arize-phoenix
 - You're using LangChain
 - You want zero-configuration setup
 - You need production monitoring
+
+---
+
+### Datadog Agent Observability
+**Documentation**: https://docs.datadoghq.com/llm_observability/
+
+**What it does**: Hosted tracing and evaluation for LLM applications and agents, integrated with Datadog APM.
+
+**Key Features**:
+- Trace and span views for LLM calls, workflows, tools, and agents
+- Cost, latency, error, privacy, and evaluation signals
+- OpenTelemetry support and correlation with application traces
+- Experiment and annotation workflows
+
+**When to use**:
+- Your organization already runs Datadog APM or centralized Datadog monitoring
+- You need LLM traces correlated with infrastructure and application incidents
 - You prefer managed service
 
 ---

@@ -1,0 +1,4 @@
+interface:
+  display_name: "G-Eval Workflow"
+  short_description: "Build evidence-based LLM judging workflows."
+  default_prompt: "Create a G-Eval workflow for this system."

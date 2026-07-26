@@ -101,15 +101,9 @@ This common scenario indicates:
 2. **Temperature Sensitivity**: Performance degrades with sampling variation
 3. **Deployment Risk**: Production behavior may differ from testing
 
-### Threshold Considerations
+### Policy considerations
 
-| Metric | High Requirements | Moderate Requirements | Low Requirements |
-|--------|------------------|---------------------|------------------|
-| CR@K | ≥ 0.95 | ≥ 0.85 | ≥ 0.70 |
-| Prompt Robustness | ≥ 0.90 | ≥ 0.80 | ≥ 0.65 |
-| Sampling Robustness | ≥ 0.85 | ≥ 0.75 | ≥ 0.60 |
-
-Note: Thresholds should be adjusted based on specific domain requirements and risk tolerance.
+SCORE reports accuracy, consistency, and robustness observations; it does not determine deployment readiness. The accountable owner must define any acceptance or escalation policy after reviewing baseline distributions, consequences of error, review capacity, and available mitigations. Keep that policy versioned separately from the evaluator.
 
 ## Advanced Features
 
@@ -158,9 +152,10 @@ medical_test = {
     ]
 }
 
-# Medical domain requires CR@K > 0.95
-if metrics.consistency_rate < 0.95:
-    raise ValueError("Model not suitable for medical use")
+# The system owner supplies policy; the evaluator reports evidence.
+policy = load_owner_policy()
+if policy.requires_escalation(metrics):
+    route_to_owner_review(metrics)
 ```
 
 ### Customer Support
@@ -196,13 +191,9 @@ support_evaluator = SCOREEvaluator(
 
 ### Pitfall 1: Ignoring the Gap
 ```python
-# ❌ Wrong
-if accuracy > 0.8:
-    deploy_to_production()
-
-# ✅ Correct
-if accuracy > 0.8 AND consistency_rate > 0.75:
-    deploy_to_production()
+# Report the dimensions separately and let an external policy decide.
+report = {"accuracy": accuracy, "consistency_rate": consistency_rate}
+publish_evaluation_report(report)
 ```
 
 ### Pitfall 2: Wrong K Selection
@@ -256,8 +247,7 @@ metrics = evaluator.evaluate(
   run: |
     python -m pytest tests/score_tests.py
   env:
-    SCORE_ACCURACY_THRESHOLD: 0.8
-    SCORE_CONSISTENCY_THRESHOLD: 0.75
+    EVALUATION_POLICY_PATH: config/evaluation-policy.json
 ```
 
 ## References

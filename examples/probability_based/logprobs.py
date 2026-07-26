@@ -107,17 +107,18 @@ def analyze_logprobs(
 def detect_hallucination_risk(
     text: str,
     model: str = "gpt-3.5-turbo",
-    confidence_threshold: float = 0.3
+    confidence_threshold: Optional[float] = None
 ) -> List[Dict]:
     """
     Detect potential hallucinations using low confidence scores.
 
-    Tokens with probability below threshold are flagged as high-risk.
+    When the caller supplies a threshold, return tokens below it. With no
+    threshold, return every token probability so the owner can apply policy.
 
     Args:
         text: Generated text to analyze
         model: Model used for generation
-        confidence_threshold: Probability below which to flag tokens
+        confidence_threshold: Caller-owned probability boundary, if any
 
     Returns:
         risk_tokens: List of flagged tokens with alternatives
@@ -135,13 +136,13 @@ def detect_hallucination_risk(
     hallucination_risk = []
 
     for i, (token, prob) in enumerate(zip(analysis['tokens'], analysis['probabilities'])):
-        if prob < confidence_threshold:
+        if confidence_threshold is None or prob < confidence_threshold:
             hallucination_risk.append({
                 'position': i,
                 'token': token,
                 'confidence': prob,
                 'alternatives': analysis['top_alternatives'][i],
-                'severity': 'HIGH' if prob < 0.1 else 'MEDIUM'
+                'severity': None
             })
 
     return hallucination_risk

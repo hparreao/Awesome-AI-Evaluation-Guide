@@ -1,0 +1,4 @@
+interface:
+  display_name: "SCORE Robustness"
+  short_description: "Measure consistency across perturbations."
+  default_prompt: "Evaluate this model with SCORE robustness checks."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "RAG Component Evaluation"
+  short_description: "Evaluate retrieval and generation separately."
+  default_prompt: "Evaluate this RAG pipeline by component."

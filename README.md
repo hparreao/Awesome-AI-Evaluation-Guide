@@ -10,9 +10,22 @@
 
 This repository provides practical implementations and detailed guidance for evaluating AI systems, with a focus on understanding when and how to apply different evaluation methods. Unlike simple metric collections, we offer working code, mathematical foundations, and domain-specific considerations.
 
+## Runnable examples
+
+The repository includes small Python examples for G-Eval, SCORE robustness, RAG component evaluation, confidence calibration, and group-outcome auditing. They are designed to be read, adapted, and connected to the provider or data source used by each project.
+
+Run the test suite and any individual example from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+python -m examples.rag_evaluation.component_metrics
+```
+
+The examples report observations and leave thresholds and release decisions to the team using them. [`config/evaluation-policy.example.json`](config/evaluation-policy.example.json) is a starting point for recording those decisions. The modules live beside their topics under [`examples`](examples); [`skills`](skills) contains the related Codex workflows.
+
 ### What Makes This Guide Different
 
-- **Implementation-First**: Every metric includes complete, tested code examples
+- **Implementation-First**: Selected methods include runnable examples; the remaining sections provide references and design guidance
 - **Decision Frameworks**: Clear tables and guides for metric selection
 - **Mathematical Rigor**: Understanding the theory behind each evaluation method
 - **Domain Expertise**: Tailored approaches for medical, legal, financial, and other specialized applications
@@ -80,16 +93,9 @@ This repository provides practical implementations and detailed guidance for eva
 | **Dialogue** | Coherence, Engagement | Response diversity | Context window important |
 | **Multi-Agent** | Task completion, Coordination | Communication efficiency | System-level metrics needed |
 
-### Domain-Specific Thresholds
+### Policy ownership
 
-| Domain | Metric Type | Typical Threshold | Rationale |
-|--------|------------|------------------|-----------|
-| **Medical** | Faithfulness | > 0.9 | Patient safety critical |
-| **Legal** | Factual accuracy | > 0.95 | Regulatory compliance |
-| **Financial** | Numerical precision | > 0.98 | Monetary implications |
-| **Customer Support** | Response relevance | > 0.7 | User satisfaction |
-| **Creative Writing** | Diversity score | > 0.6 | Avoid repetition |
-| **Education** | Answer correctness | > 0.85 | Learning outcomes |
+This repository does not prescribe domain thresholds. A threshold is a release-policy decision that depends on the consequences of failure, error distribution, review capacity, baseline performance, and the available mitigation. Define it with the accountable system owner, retain its rationale, and configure it outside the evaluator. [`config/evaluation-policy.example.json`](config/evaluation-policy.example.json) is a starting point.
 
 ## Getting Started
 
@@ -266,6 +272,9 @@ Use LLMs to evaluate LLM outputs based on custom criteria.
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
+# Read from a versioned policy approved by the system owner.
+owner_policy = load_owner_policy()
+
 # Define custom evaluation
 correctness = GEval(
     name="Correctness",
@@ -278,7 +287,7 @@ correctness = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
         LLMTestCaseParams.EXPECTED_OUTPUT
     ],
-    threshold=0.7
+    threshold=owner_policy["correctness"]
 )
 
 # Evaluate
@@ -467,7 +476,7 @@ medical_faithfulness = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
         LLMTestCaseParams.RETRIEVAL_CONTEXT
     ],
-    threshold=0.9  # High threshold for medical
+    threshold=owner_policy["rag_faithfulness"]
 )
 ```
 
@@ -555,7 +564,9 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[Arize Phoenix](https://github.com/Arize-ai/phoenix)** - OpenTelemetry-based observability with embedding visualization
 - **[Opik](https://github.com/comet-ml/opik)** - Self-hostable platform with dataset management and experiment tracking
 - **[Helicone](https://www.helicone.ai/)** - Observability platform with request caching and rate limiting
-- **[Weights & Biases](https://wandb.ai/site)** - ML experiment tracking extended for LLM evaluation
+- **[MLflow](https://mlflow.org/docs/latest/genai/tracing)** - OpenTelemetry-compatible tracing, evaluation, and experiment tracking for LLM applications and agents
+- **[Traceloop / OpenLLMetry](https://www.traceloop.com/docs/openllmetry/introduction)** - OpenTelemetry instrumentation that can export traces to an existing observability stack
+- **[Weights & Biases Weave](https://wandb.ai/site)** - Experiment tracking, tracing, and evaluation for LLM applications
 
 ### Commercial Solutions
 
@@ -566,6 +577,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[HoneyHive](https://www.honeyhive.ai/)** - Enterprise platform with A/B testing and fine-tuning workflows
 - **[Humanloop](https://humanloop.com/)** - Prompt engineering and evaluation with human-in-the-loop
 - **[Galileo](https://www.rungalileo.io/)** - ML observability extended for GenAI applications
+- **[Datadog Agent Observability](https://docs.datadoghq.com/llm_observability/)** - Agent traces, evaluations, cost/latency monitoring, and correlation with Datadog APM
 
 ### Cloud Services
 
@@ -718,20 +730,15 @@ def generate(query, documents):
 # Separate scores for retrieval vs. generation
 ```
 
-### 4. Set Domain-Appropriate Thresholds
+### 4. Apply an owner-approved policy
 
 ```python
-# Medical application: high threshold, strict mode
-medical_metric = GEval(
-    threshold=0.9,
-    strict_mode=True,  # Binary: perfect or fail
-    ...
-)
-
-# General chatbot: lower threshold, graded scoring
-chatbot_metric = GEval(
-    threshold=0.7,
-    strict_mode=False,
+# Define this outside the evaluator after studying the local error distribution,
+# consequences, compensating controls, and reviewer workflow.
+owner_policy = load_owner_policy()
+metric = GEval(
+    threshold=owner_policy["selected_metric"],
+    strict_mode=owner_policy["strict_mode"],
     ...
 )
 ```
@@ -739,22 +746,16 @@ chatbot_metric = GEval(
 ### 5. Monitor Confidence-Accuracy Correlation
 
 ```python
-# Validate Spearman ρ > 0.7
+# Report confidence-accuracy correlation and its uncertainty.
 correlation = spearmanr(confidences, accuracies)
-if correlation < 0.7:
-    print("⚠️ Confidence scores unreliable - recalibrate")
+publish_calibration_report(correlation)
 ```
 
 ### 6. Implement Human-in-the-Loop Thresholds
 
 ```python
-def route_for_review(calibrated_confidence):
-    if calibrated_confidence >= 0.85:
-        return "AUTO_PROCESS"
-    elif calibrated_confidence >= 0.60:
-        return "SPOT_CHECK"  # 10% sampling
-    else:
-        return "HUMAN_REVIEW"  # 100% review
+def route_for_review(calibrated_confidence, owner_policy):
+    return owner_policy.route(calibrated_confidence)
 ```
 
 ### 7. Cost Optimization
@@ -799,10 +800,12 @@ def cached_evaluate(input_hash, output_hash):
 - **[Hugging Face Evaluate](https://github.com/huggingface/evaluate)** - Library for easily evaluating ML models and datasets
 - **[Microsoft Promptflow](https://github.com/microsoft/promptflow)** - Evaluation flows for LLM applications
 
-#### Notebooks & Demos
-- **[Colab: LLM Evaluation Basics](examples/notebooks/evaluation_basics.ipynb)** - Interactive introduction
-- **[RAG Evaluation Notebook](examples/notebooks/rag_evaluation.ipynb)** - Step-by-step RAG metrics
-- **[Custom Metrics Creation](examples/notebooks/custom_metrics.ipynb)** - Building domain-specific evaluations
+#### Runnable examples
+- **[G-Eval workflow](examples/llm_as_judge/g_eval_workflow.py)** - Separate critical dimensions from other evaluator outputs
+- **[SCORE workflow](examples/consistency_robustness/score_workflow.py)** - Compare accuracy and consistency across variations
+- **[RAG component metrics](examples/rag_evaluation/component_metrics.py)** - Attribute findings to retrieval or generation
+- **[Calibration workflow](examples/confidence_scoring/calibration_workflow.py)** - Compare confidence with observed outcomes
+- **[Bias audit](examples/bias_detection/bayesian_audit.py)** - Report Beta posteriors for group outcomes and their mean gap
 
 ### Communities & Discussions
 

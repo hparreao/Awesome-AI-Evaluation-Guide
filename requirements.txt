@@ -7,7 +7,6 @@ anthropic
 numpy
 scipy
 scikit-learn
-LLM-as-a-Judge
 deepeval
 ragas
 langchain

@@ -124,7 +124,8 @@ def majority_vote_confidence(
         'majority_count': majority_count,
         'unique_responses': len(response_counts),
         'response_distribution': dict(response_counts),
-        'agreement_level': 'HIGH' if confidence >= 0.8 else 'MEDIUM' if confidence >= 0.6 else 'LOW'
+        # Classification and routing belong to a caller-owned policy layer.
+        'agreement_level': None
     }
 
     return majority_response, confidence, details

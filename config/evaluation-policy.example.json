@@ -1,0 +1,35 @@
+{
+  "owner": "replace-with-accountable-team-or-role",
+  "release_decision": {
+    "mode": "manual",
+    "decision_log_required": true
+  },
+  "golden_set": {
+    "holdout_access": "restricted",
+    "refresh_process": "replace-with-annotation-and-approval-process"
+  },
+  "rubric": {
+    "critical_dimensions": ["replace-with-context-specific-dimension"],
+    "aggregation": "replace-with-owner-policy",
+    "unknown_handling": "replace-with-owner-policy"
+  },
+  "regression": {
+    "runs_per_case": null,
+    "comparison_method": "replace-with-statistical-or-operational-policy",
+    "required_observations": ["quality", "latency", "cost", "tool_failures"]
+  },
+  "ab_experiment": {
+    "assignment_unit": "user_or_account",
+    "traffic_allocation": null,
+    "segments": [],
+    "stopping_rule": "replace-with-owner-policy"
+  },
+  "human_review": {
+    "reviewer_qualifications": "replace-with-owner-policy",
+    "adjudication_process": "replace-with-owner-policy"
+  },
+  "red_team": {
+    "permitted_test_environment": "isolated",
+    "side_effect_policy": "no-production-side-effects"
+  }
+}

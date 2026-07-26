@@ -322,14 +322,15 @@ class QuaCerBCertification:
     def __init__(
         self,
         confidence_level: float = 0.95,
-        max_bias_threshold: float = 0.1
+        max_bias_threshold: Optional[float] = None
     ):
         """
         Initialize QuaCer-B certification.
 
         Args:
             confidence_level: Statistical confidence level
-            max_bias_threshold: Maximum acceptable bias level
+            max_bias_threshold: Owner-approved maximum bias level. Omit to
+                report bounds without making a certification decision.
         """
         self.confidence_level = confidence_level
         self.max_bias_threshold = max_bias_threshold
@@ -371,8 +372,8 @@ class QuaCerBCertification:
                 bias_bounds[f"{group_i}_vs_{group_j}"] = bound
                 max_bias = max(max_bias, bound['upper_bound'])
 
-        # Certification decision
-        is_certified = max_bias <= self.max_bias_threshold
+        # Certification is a policy decision; no default is embedded here.
+        is_certified = None if self.max_bias_threshold is None else max_bias <= self.max_bias_threshold
 
         return {
             "is_certified": is_certified,
@@ -381,9 +382,11 @@ class QuaCerBCertification:
             "confidence_level": self.confidence_level,
             "pairwise_bounds": bias_bounds,
             "certification_statement": (
-                f"Model {'IS' if is_certified else 'IS NOT'} certified as unbiased "
-                f"with {self.confidence_level:.0%} confidence. "
-                f"Maximum bias: {max_bias:.3f} (threshold: {self.max_bias_threshold:.3f})"
+                f"Maximum observed bias bound: {max_bias:.3f}; "
+                f"confidence level: {self.confidence_level:.0%}."
+                if self.max_bias_threshold is None else
+                f"Policy result: {'within' if is_certified else 'outside'} the owner-supplied bias bound "
+                f"({self.max_bias_threshold:.3f}) at {self.confidence_level:.0%} confidence."
             )
         }
 

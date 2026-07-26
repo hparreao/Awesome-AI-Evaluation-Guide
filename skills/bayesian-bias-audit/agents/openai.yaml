@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bayesian Bias Audit"
+  short_description: "Audit group outcome disparities with uncertainty."
+  default_prompt: "Audit this evaluation data for group bias."
