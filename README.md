@@ -647,6 +647,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[AgentBench](https://github.com/THUDM/AgentBench)** - Comprehensive agent evaluation across 8 environments
 - **[GAIA](https://huggingface.co/datasets/gaia-benchmark/GAIA)** - General AI assistants with real-world questions requiring tools
 - **[WebArena](https://webarena.dev/)** - Autonomous web agents in realistic environments
+- **[ClawBench](https://github.com/reacher-z/ClawBench)** - Browser-agent benchmark with 153 everyday tasks across 144 live websites, request-level safety interception, and multi-layer execution traces ([paper](https://arxiv.org/abs/2604.08523), [project](https://claw-bench.com/))
 - **[ToolBench](https://github.com/OpenBMB/ToolBench)** - Tool learning with 16,000+ real-world APIs
 
 ### Safety & Alignment Benchmarks
