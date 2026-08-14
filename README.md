@@ -840,6 +840,7 @@ def cached_evaluate(input_hash, output_hash):
 - **[OpenAI System Card](https://cdn.openai.com/papers/gpt-4-system-card.pdf)** - GPT-4 evaluation methodology
 - **[Anthropic Claude Evaluations](https://www.anthropic.com/news/claude-constitution)** - Constitutional AI evaluation approach
 - **[Google PaLM Technical Report](https://arxiv.org/abs/2204.02311)** - Comprehensive evaluation across 150+ tasks
+- **[Proceedings of the First (and Last) Intent-Inference Conference](https://dev.to/rxdt/proceedings-of-the-first-and-last-intent-inference-conference-24a5)** - Reproducible agentic evaluation case study where AI agents built spaCy model recommenders, then a fresh AI peer-review panel rejected all three; includes the [repo, transcript, and results](https://github.com/rxdt/inference_conference)
 
 ---
 
