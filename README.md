@@ -646,6 +646,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 #### Agent & Tool Use
 - **[AgentBench](https://github.com/THUDM/AgentBench)** - Comprehensive agent evaluation across 8 environments
 - **[GAIA](https://huggingface.co/datasets/gaia-benchmark/GAIA)** - General AI assistants with real-world questions requiring tools
+- **[Dr. Bench](https://github.com/EVIGBYEN/DrBench)** - Deep-research-agent benchmark with 214 expert-curated long-form report tasks and retrieval-trustworthiness scoring
 - **[WebArena](https://webarena.dev/)** - Autonomous web agents in realistic environments
 - **[ToolBench](https://github.com/OpenBMB/ToolBench)** - Tool learning with 16,000+ real-world APIs
 
