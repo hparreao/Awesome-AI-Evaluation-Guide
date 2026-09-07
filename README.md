@@ -827,6 +827,7 @@ def cached_evaluate(input_hash, output_hash):
 - **[Awesome RAG](https://github.com/siat-nlp/awesome-rag)** - RAG-specific tools and papers
 - **[Awesome LLM Safety](https://github.com/ydli-ai/csl)** - Safety evaluation and alignment
 - **[Awesome Production LLM](https://github.com/jihoo-kim/awesome-production-llm)** - Production deployment including monitoring
+- **[LLM Benchmark Costco](https://joe1chief.github.io/llm-benchmark-costco/)** - Searchable LLM benchmark collection with English and Chinese summaries, filters, official source links, and data-construction and evaluation flowcharts.
 
 #### Benchmark Leaderboards
 - **[Open LLM Leaderboard](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)** - Hugging Face's model rankings
