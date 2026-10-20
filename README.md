@@ -52,6 +52,7 @@ The examples report observations and leave thresholds and release decisions to t
 - [Evaluation Methods](#evaluation-methods)
   - [Traditional Metrics](#traditional-metrics)
   - [Modern Metrics](#modern-metrics)
+    - [Bayes@N performance estimates](#bayesn-performance-estimates)
   - [Confidence & Calibration](#confidence--calibration)
   - [Safety & Bias Detection](#safety--bias-detection)
 - [Domain-Specific Evaluation](#domain-specific-evaluation)
@@ -339,6 +340,16 @@ metrics = evaluator.evaluate(test_cases)
 print(f"Accuracy: {metrics.accuracy:.2%}")
 print(f"Consistency Rate: {metrics.consistency_rate:.2%}")
 ```
+
+---
+
+### Bayes@N performance estimates
+
+Estimate benchmark-average performance and sampling uncertainty from repeated binary or graded outcomes with a uniform Dirichlet prior.
+This measures uncertainty in estimated performance on a fixed benchmark.
+
+Run `python examples/confidence_scoring/bayes_at_n.py` for offline examples.
+See the [implementation](examples/confidence_scoring/bayes_at_n.py), [input and assumption guide](docs/confidence-scoring/bayes-at-n.md), and [ICLR 2026 paper](https://arxiv.org/abs/2510.04265).
 
 ---
 
