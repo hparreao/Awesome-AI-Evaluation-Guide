@@ -42,6 +42,7 @@ The examples report observations and leave thresholds and release decisions to t
 | **Bias Detection** | Bayes Factors superior to p-values | QuaCer-B research | Use Bayesian methods for statistical rigor |
 
 ---
+- **[LevelBench-100 Cross-System Evaluation](https://levelcfo.com/benchmarks/agentic-accounting/)** ([GitHub](https://github.com/levelcfo/levelbench-100)): Across 75 live agentic accounting runs ($500K token study), frontier models score 96.0% on single-source tasks but drop to 63.6% on cross-system subledger-to-GL reconciliations unless paired with deterministic verification gates.
 
 ## Table of Contents
 
