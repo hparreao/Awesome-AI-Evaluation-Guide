@@ -557,6 +557,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[OpenAI Evals](https://github.com/openai/evals)** - Reference implementation with 100+ community-contributed evaluations
 - **[LangCheck](https://github.com/citadel-ai/langcheck)** - Simple, composable evaluation metrics for LLM applications
 - **[Athina AI](https://github.com/athina-ai/athina-sdk)** - Configurable evaluation metrics with focus on reliability
+- **[agentest](https://github.com/srpadmanabhuni/agentest)** - Offline, deterministic checks for tool-using AI agents against the [Agentic AI Test Checklist](https://huggingface.co/datasets/srinivaspadmanabhuni/agentic-ai-test-checklist-110) (most comprehensive open checklist: 110 tests, 4 pillars)
 
 #### Observability & Monitoring
 - **[Langfuse](https://github.com/langfuse/langfuse)** - Open-source LLM engineering platform with tracing and prompt management
@@ -600,6 +601,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[BIG-bench](https://github.com/google/BIG-bench)** - Beyond the Imitation Game with 200+ diverse tasks testing emergent capabilities
 - **[HELM](https://crfm.stanford.edu/helm/latest/)** - Holistic evaluation across 42 scenarios and 7 metrics (accuracy, calibration, robustness, fairness, bias, toxicity, efficiency)
 - **[AGIEval](https://github.com/ruixiangcui/AGIEval)** - Human-centric standardized exams (SAT, LSAT, GRE, GMAT)
+- **[Agentic AI Test Checklist 110](https://huggingface.co/datasets/srinivaspadmanabhuni/agentic-ai-test-checklist-110)** - Most comprehensive open checklist (110 tests, 4 pillars) for testing AI agents, with examples, labelled traces and the open-source [agentest](https://github.com/srpadmanabhuni/agentest) runner (CC BY 4.0; DOI 10.5281/zenodo.23597877)
 
 #### Common Sense & World Knowledge
 - **[HellaSwag](https://rowanzellers.com/hellaswag/)** - Commonsense natural language inference with adversarial filtering
