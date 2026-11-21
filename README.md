@@ -578,6 +578,7 @@ Evaluation challenges unique to autonomous and cooperative agents.
 - **[Humanloop](https://humanloop.com/)** - Prompt engineering and evaluation with human-in-the-loop
 - **[Galileo](https://www.rungalileo.io/)** - ML observability extended for GenAI applications
 - **[Datadog Agent Observability](https://docs.datadoghq.com/llm_observability/)** - Agent traces, evaluations, cost/latency monitoring, and correlation with Datadog APM
+- **[Highworth AI](https://highworth.ai/)** - Community-driven "worth it" scores for 60+ AI models, aggregated from verifiable user reviews on Hacker News, Reddit, V2EX and Bilibili
 
 ### Cloud Services
 
